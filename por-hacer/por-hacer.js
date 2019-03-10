@@ -57,14 +57,26 @@ const actualizar = (descripcion, completado = true) => {
 
 const borrar = (descripcion) => {
     cargarDb();
-    let index = listadoPorHacer.findIndex(tarea => tarea.descripcion === descripcion);
-    if (index >= 0) {
-        let tareaBorrada = listadoPorHacer[index].descripcion;
-        listadoPorHacer.splice(index, index);
+    // let index = listadoPorHacer.findIndex(tarea => tarea.descripcion === descripcion);
+    // if (index >= 0) {
+    //     let tareaBorrada = listadoPorHacer[index].descripcion;
+    //     listadoPorHacer.splice(index, index);
+    //     guardarDb();
+    //     return true;
+    // } else {
+    //     return false;
+    // } Así lo hice yo 
+
+    let nuevoListado = listadoPorHacer.filter(tarea => {
+        return tarea.descripcion !== descripcion;
+    });
+
+    if (nuevoListado.length === listadoPorHacer.length) {
+        return false;
+    } else {
+        listadoPorHacer = nuevoListado;
         guardarDb();
         return true;
-    } else {
-        return false;
     }
 }
 
